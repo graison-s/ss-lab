@@ -12,7 +12,7 @@ int main(){
 	printf("Enter the direction (-1 for left and 1 for right) : ");
 	scanf("%d",&direction);
 	for(i=0; i<n; i++)
-		finish[i] = 0;
+		finish[i] = 0; 
 	int count = 0,curr_track = head;
 	while(1){
 		if(count == n)

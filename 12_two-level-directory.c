@@ -26,33 +26,33 @@ int find_directory(struct dir d[],int d_count,char dname[]){
 	return f;
 }
 void main(){
-	int i,j,op,index,index2,d_count;
+	int i,j,op,index,index2,users_count;
 	char fname[10], dname[10];
 	struct dir users[10];
-	d_count = 0;
+	users_count = 0;
 	for(i=0; i<10; i++)
 		users[i].f_count = 0;
 	printf("23 Graison S\n");
 	while(1){
 		printf("\n-------------------------------------------------------------------------");
-		printf("\n1. Create directory\t\t2. Create File\t\t3. Delete File\n4. Search File\t\t5. Display Files\t\t0. Exit\n");
+		printf("\n1. Create user\t\t2. Create File\t\t3. Delete File\n4. Search File\t\t5. Display Files\t\t6. Delete user\t\t0. Exit\n");
 		printf("Enter the option : ");
 		scanf("%d",&op);
 		switch(op){
 			case 1: 
-					printf("\nEnter the name of the directory : ");
+					printf("\nEnter the name of the user : ");
 					scanf("%s",dname);
-					if(find_directory(users,d_count,dname) == -1){
-						strcpy(users[d_count++].dir_name,dname);
-						printf("\nDirectory created.");
+					if(find_directory(users,users_count,dname) == -1){
+						strcpy(users[users_count++].dir_name,dname);
+						printf("\nuser created.");
 					}
 					else
-						printf("\nInvalid!! Directory already exists"); 
+						printf("\nInvalid!! user already exists"); 
 					break;
 			case 2:
-					printf("\nEnter the directory : ");
+					printf("\nEnter the username : ");
 					scanf("%s",dname);
-					index = find_directory(users,d_count,dname);
+					index = find_directory(users,users_count,dname);
 					if(index != -1){
 						printf("\nEnter the name of the file: ");
 						scanf("%s",fname);
@@ -64,12 +64,12 @@ void main(){
 							printf("\nInvalid!! File already exists"); 
 					}
 					else
-						printf("\nInvalid!! Directory not found.");
+						printf("\nInvalid!! user not found.");
 					break;
 			case 3: 
-					printf("\nEnter the directory : ");
+					printf("\nEnter the username : ");
 					scanf("%s",dname);
-					index = find_directory(users,d_count,dname);
+					index = find_directory(users,users_count,dname);
 					if(index != -1){
 						printf("\nEnter the file to delete: ");
 						scanf("%s",fname);
@@ -85,12 +85,12 @@ void main(){
 							printf("Invalid!! No such file exists.");
 					}
 					else
-						printf("\nInvalid!! Directory not found.");
+						printf("\nInvalid!! user not found.");
 					break;
 			case 4: 
-					printf("\nEnter the directory : ");
+					printf("\nEnter the username : ");
 					scanf("%s",dname);
-					index = find_directory(users,d_count,dname);
+					index = find_directory(users,users_count,dname);
 					if(index != -1){
 						printf("\nEnter the file to search : ");
 						scanf("%s",fname);
@@ -100,20 +100,34 @@ void main(){
 							printf("File not found");
 					}
 					else
-						printf("\nInvalid!! Directory not found.");
+						printf("\nInvalid!! user not found.");
 					break;
 			case 5: 
-					if(d_count == 0){
-						printf("\nNo directories!!");
+					if(users_count == 0){
+						printf("\nNo users!!");
 					}
 					else{
-						for(i=0; i<d_count; i++){
+						for(i=0; i<users_count; i++){
 							printf("\n------%s------\n",users[i].dir_name);
 							for(j=0; j<users[i].f_count; j++){
 								printf("%s\n",users[i].file_names[j]);
 							}
 						}
 					}
+					break;
+			case 6:
+					printf("\nEnter the name of the user : ");
+					scanf("%s",dname);
+					index = find_directory(users,users_count,dname);
+					if(index!=-1){
+						for(i=index; i<users_count-1; i++){
+							users[i] = users[i+1];
+						}
+						users_count--;
+						printf("\nUser deleted");
+					}
+					else
+						printf("\nInvalid! user doesnot exist");
 					break;
 			case 0: exit(0);
 		}

@@ -3,12 +3,11 @@
 #include<ctype.h>
 void main(){
 	FILE *fint,*ftab,*flen,*fsym, *fout, *fobj;
-	int op1[10],txtlen,txtlen1,i,j=0,len;
+	int i,len;
 	char add[5],symadd[5],op[5],start[10],temp[30],line[20],label[20],mne[10],operand[10],symtab[10],opmne[10];
 	printf("23 Graison S\n");
 	fint=fopen("intermediate.txt","r");
 	flen=fopen("length.txt","r");
-	ftab=fopen("optab.txt","r");
 	fsym=fopen("symtab.txt","r");
 	fout=fopen("output.txt","w");
 	fobj=fopen("object_file.txt","w");
@@ -21,24 +20,25 @@ void main(){
 	fprintf(fout, "%s\t%s\t%s\t%s\n",add,label,mne,operand );
 	fscanf(fint,"%s%s%s%s",add,label,mne,operand);
 	while(strcmp(mne,"END")!=0){
+		ftab=fopen("optab.txt","r");
 		fscanf(ftab,"%s%s",opmne,op);
 		while(!feof(ftab)){
 			if(strcmp(mne,opmne)==0){
 				fclose(ftab);
+				fsym=fopen("symtab.txt","r");
 				fscanf(fsym,"%s%s",symadd,symtab);
 				while(!feof(fsym)){
 					if(strcmp(operand,symtab)==0){
+						fclose(fsym);
 						fprintf(fobj,"%s%s^",op,symadd);
 						fprintf(fout,"\n%s\t%s\t%s\t%s\t%s%s\n",add,label,mne,operand,op,symadd);
 						break;
 					}
-					else
-						fscanf(fsym,"%s%s",symadd,symtab);
+					fscanf(fsym,"%s%s",symadd,symtab);
 				}
 				break;
 			}
-			else
-				fscanf(ftab,"%s%s",opmne,op);
+			fscanf(ftab,"%s%s",opmne,op);
 		}
 		if((strcmp(mne,"BYTE")==0)||(strcmp(mne,"WORD")==0)){
 			if(strcmp(mne,"WORD")==0){
@@ -60,8 +60,6 @@ void main(){
 			fprintf(fout,"\n%s\t%s\t%s\t%s\n",add,label,mne,operand);
 		}
 		fscanf(fint,"%s%s%s%s",add,label,mne,operand);
-		ftab=fopen("optab.txt","r");
-		fseek(ftab,SEEK_SET,0);
 	}
 	fprintf(fobj,"\b ");
 	fprintf(fobj,"\nE^00%s\n",start);

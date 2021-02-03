@@ -37,7 +37,7 @@ void main(){
 
 	printf("\nProcess  Burst_Time  Waiting_Time  Turnaround_Time\n");
 	for(i=0; i<size; i++){
-		printf("%-9d%-12d\t%-14d\t%-17d\n", processes[i],burst_time[i],waiting_time[i],turnaround_time[i]);
+		printf("%-9d%-12d%-14d%-15d\n", processes[i],burst_time[i],waiting_time[i],turnaround_time[i]);
 	}
 	printf("\nAverage Waiting time = %0.2f",avg_waiting);
 	printf("\nAverage Turnaround time = %0.2f\n",avg_turnaround);

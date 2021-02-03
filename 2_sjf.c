@@ -26,7 +26,7 @@ void sort(process p[],int n){
 }
 
 void main(){
-	int n,i,j,value,low,completion;
+	int n,i,j,index,low,completion;
 	float avg_waiting,avg_turnaround;
 	process p[10];
 	printf("23 Graison S\n");
@@ -44,19 +44,19 @@ void main(){
 	completion = 0;
 	for(i=0; i<n; i++){
 		low = p[i].burst_time;
-		value = i;
+		index = i;
 		j=i+1;
 		while( j<n && p[j].arrival_time <= completion ){
 			if( p[j].burst_time < low){
 				low = p[j].burst_time;
-				value = j;
+				index = j;
 			}
 			j++;
 		}
-		p[value].completion_time = completion + low;
-		p[value].turnaround_time = p[value].completion_time - p[value].arrival_time;
-		p[value].waiting_time = p[value].turnaround_time - p[value].burst_time;
-		swap(&p[i],&p[value]);
+		p[index].completion_time = completion + low;
+		p[index].turnaround_time = p[index].completion_time - p[index].arrival_time;
+		p[index].waiting_time = p[index].turnaround_time - p[index].burst_time;
+		swap(&p[i],&p[index]);
 		completion = p[i].completion_time;
 	}
 	avg_waiting = 0;

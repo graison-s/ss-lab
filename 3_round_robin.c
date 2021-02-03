@@ -9,17 +9,31 @@ int rear = -1,front = -1;
 void enqueue(struct process p){
 	if(front == -1){
 		front = rear = 0;
-		queue[front] = p;
+		queue[rear] = p;
 	}
 	else{
-		queue[++front] = p;
+		queue[++rear] = p;
 	}
 }
 struct process dequeue(){
-	return queue[rear++];
+	return queue[front++];
+}
+void printQueue(){
+	for(int i=front; i<=rear; i++)
+		printf("%d->",queue[i].id);
+	printf("\n");
+}
+int isInQueue(struct process item){
+	int i,f=0;
+	for(i=front; i<=rear; i++){
+		if(queue[i].id==item.id){
+			f=1;break;
+		}
+	}
+	return f;
 }
 int isempty(){
-	if(front == -1 || rear > front)
+	if(front == -1 || front > rear)
 		return 1;
 	else
 		return 0;
@@ -57,6 +71,7 @@ void main() {
 		}
 	}
 	while(!isempty()){
+		printQueue();
 		temp = dequeue();
 		if(temp.rem_burst > quantum){
 			t = t + quantum;

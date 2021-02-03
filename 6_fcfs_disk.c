@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
 int main()
 {
 	int i,n,head,tot_seek_time=0,avg_seek_time,request[100];
